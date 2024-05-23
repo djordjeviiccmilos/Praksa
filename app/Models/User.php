@@ -8,7 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 
-class User extends Model
+class User extends \Illuminate\Foundation\Auth\User
 {
     use HasRolesAndAbilities, Notifiable;
+
+    public function run(): void
+    {
+        User::factory();
+    }
+
 }
