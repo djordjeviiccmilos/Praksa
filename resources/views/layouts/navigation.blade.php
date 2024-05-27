@@ -1,3 +1,10 @@
+<style>
+    .zoom:hover {
+        transform: scale(1.05);
+        transition: 1s;
+    }
+</style>
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,12 +18,13 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex zoom">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
 
+                @if(Bouncer::is(Auth::user())->an('user') || Bouncer::is(Auth::user())->an('manager'))
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="left" width="48">
                         <x-slot name="trigger">
@@ -46,6 +54,39 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+                @endif
+
+                @if(Bouncer::is(Auth::user())->an('admin'))
+                <div class=" space-x-8 sm:-my-px sm:ms-10 sm:flex zoom">
+                    <x-nav-link href="{{ route('managers.create') }}" :active="request()->routeIs('managers.create')">
+                        {{ __('Create new managers') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
+                @if(Bouncer::is(Auth::user())->an('admin'))
+                    <div class=" space-x-8 sm:-my-px sm:ms-10 sm:flex zoom">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Review comments') }}
+                        </x-nav-link>
+                    </div>
+                @endif
+
+                @if(Bouncer::is(Auth::user())->an('admin'))
+                    <div class=" space-x-8 sm:-my-px sm:ms-10 sm:flex zoom">
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                            {{ __('Display users') }}
+                        </x-nav-link>
+                    </div>
+                @endif
+
+                @if(Bouncer::is(Auth::user())->an('manager'))
+                    <div class=" space-x-8 sm:-my-px sm:ms-10 sm:flex zoom">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Create a new post') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

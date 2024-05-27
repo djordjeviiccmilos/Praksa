@@ -12,9 +12,5 @@ class User extends \Illuminate\Foundation\Auth\User
 {
     use HasRolesAndAbilities, Notifiable;
 
-    public function run(): void
-    {
-        User::factory();
-    }
-
+    protected $fillable = ['id', 'name', 'email', 'password'];
 }

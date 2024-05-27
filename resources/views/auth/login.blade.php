@@ -14,14 +14,14 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" class="text-center fs-5 text-white" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="example@gmail.com" />
+            <x-input-label for="email" :value="__('Email')" class="text-center fs-5 text-dark-900" />
+            <x-text-input id="email" placeholder="example@gmail.com" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="example@gmail.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" class="text-center fs-5 text-white" />
+            <x-input-label for="password" :value="__('Password')" class="text-center fs-5 text-dark-900" />
 
             <x-text-input id="password" class="block mt-1 w-full "
                             type="password"
@@ -34,8 +34,8 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-white fw-bold ">{{ __('Remember me') }}</span>
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-dark-900 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ms-2 text-sm fw-bold ">{{ __('Remember me') }}</span>
             </label>
         </div>
 
