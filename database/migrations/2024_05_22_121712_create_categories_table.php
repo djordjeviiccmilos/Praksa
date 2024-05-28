@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('names', 255);
-            $table->text('descriptions');
+            $table->string('names', 255)->unique();
             $table->foreignId('created_by')->constrained('users', 'id')->noActionOnDelete()->cascadeOnUpdate();
             $table->foreignId('updated_by')->constrained('users', 'id')->noActionOnDelete()->cascadeOnUpdate();
             $table->timestamps();
