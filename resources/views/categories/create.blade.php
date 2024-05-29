@@ -11,7 +11,7 @@
             <!-- Category Description -->
             <div class="mt-4">
                 <x-input-label for="description" :value="__('Category Description')" />
-                <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required />
+                <textarea class="form-control" id="description" name="description" rows="4" style="resize: none;"></textarea>
             </div>
 
             <x-primary-button class="mt-4 justify-center text-center">

@@ -5,6 +5,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $posts = Post::all();
-    return view('dashboard', compact('posts'));
+    $categories = Category::all();
+    return view('dashboard', compact('posts', 'categories'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -40,6 +42,9 @@ Route::delete('/categories/{category}/delete', [CategoryController::class, 'dest
 
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/category/{category}', [PostController::class, 'filterByCategory'])->name('posts.category');
 
+Route::post('/comments/store', [PostController::class, 'storeComment'])->name('comments.store');
 
 require __DIR__.'/auth.php';

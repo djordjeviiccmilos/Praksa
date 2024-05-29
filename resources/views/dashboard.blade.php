@@ -6,15 +6,24 @@
     </x-slot>
 
 
-    @foreach($posts as $post)
-        <div class="card" style="width:400px">
-            <img class="card-img-top" src="{{ asset($post->images) }}" alt="Card image">
-            <div class="card-body">
-                <h4 class="card-title">{{ $post->post_titles }}</h4>
-                <p class="card-text">{{ $post->post_details }}</p>
-                <a href="#" class="btn btn-primary">See Profile</a>
+    <div class="row mt-3 ml-4">
+
+
+        @foreach($posts as $post)
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <img class="card-img-top" src="{{ asset($post->images) }}" alt="Card image">
+                    <div class="card-body">
+                        <h5 class="card-title fs-7">Title: <span class="fw-bold">{{ $post->post_titles }}</span></h5>
+                        <p class="card-text fs-7">Details:  <span class="fw-bold">{{ $post->post_details }}</span></p>
+                        <p class="card-text fs-7">Category: <a class="text-primary" href="{{ route('posts.category', $post->category) }}">{{ $post->category->names }}</a></p>
+                        <div class="text-xl-end">
+                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 
 </x-app-layout>
