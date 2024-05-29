@@ -2,6 +2,29 @@
     <x-slot name="header">
         <div class="container">
             <h1>Edit Category</h1>
+
+            @if ($errors->has('role'))
+                <div class="alert alert-danger" role="alert">
+                    {{ $errors->first('role') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('categories.update', ['category' => $category->id]) }}">
                 @csrf
                 @method('PUT')

@@ -25,7 +25,7 @@
                     </x-nav-link>
                 </div>
 
-                @if(Bouncer::is(Auth::user())->an('user') || Bouncer::is(Auth::user())->an('manager'))
+                @if(Bouncer::is(Auth::user())->an('user'))
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="left" width="48">
                         <x-slot name="trigger">
@@ -75,7 +75,7 @@
 
                 @if(Bouncer::is(Auth::user())->an('manager'))
                     <div class=" space-x-8 sm:-my-px sm:ms-10 sm:flex zoom">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
                             {{ __('Create a new post') }}
                         </x-nav-link>
                     </div>

@@ -58,7 +58,7 @@
 
             @if (Session::has('success'))
                 <div class="alert alert-success" role="alert">
-                    {{ Session::get('Manager added') }}
+                    {{ Session::get('New manager added') }}
                 </div>
             @endif
         </div>

@@ -1,43 +1,45 @@
-@extends('layouts.app')
-
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card">
-                    <div class="card-header">Create Post</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('posts.store') }}">
-                            @csrf
-
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autofocus>
-                                @error('title')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="content">Content</label>
-                                <textarea id="content" class="form-control @error('content') is-invalid @enderror" name="content" required>{{ old('content') }}</textarea>
-                                @error('content')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Create Post</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<x-app-layout>
+    <div style="display: block; text-align: center; margin-top: 50px;">
+        <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data" style="display: inline-block; margin-left: auto; margin-right: auto; text-align: left;">
+            @csrf
+            <!-- Post title -->
+            <div class="mt-4">
+                <x-input-label for="post_titles" :value="__('Post Title')" />
+                <x-text-input id="post_titles" class="block mt-1" type="text" name="post_titles" :value="old('post_titles')" required autofocus />
             </div>
-        </div>
+
+            <!-- Post Details -->
+            <div class="mt-4">
+                <x-input-label for="post_details" :value="__('Post Details')" />
+                <textarea class="form-control" id="post_details" name="post_details" rows="4" style="resize: none;"></textarea>
+            </div>
+
+            <!-- Post Image -->
+            <div class="mt-4">
+                <x-input-label for="images" :value="__('Post Image')" />
+                <input type="file" name="images" id="images">
+            </div>
+
+            <!-- Post category -->
+
+            <div class="form-group mt-4">
+                <x-input-label for="category_id">Category</x-input-label>
+                <select class="form-control" id="category_id" name="category_id" required>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->names }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <x-primary-button class="mt-4 justify-center text-center">
+                {{ __('Add post') }}
+            </x-primary-button>
+        </form>
+
+        @if (session('success'))
+            <div class="alert alert-success mt-3" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
     </div>
-@endsection
+</x-app-layout>

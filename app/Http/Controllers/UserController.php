@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Silber\Bouncer\Bouncer as Bouncer;
+use Silber\Bouncer\Database\Role;
 
 class UserController extends Controller
 {
@@ -19,16 +21,41 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user) {
-        $validator = Validator::make($request->all(), [
-            'name' => ['string', 'max:255'],
-            'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-        ]);
+        if($request->has('name')) {
+            $validator = Validator::make($request->only('name'), [
+                'name' => ['required', 'string', 'max:255'],
+            ]);
+            if($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+            $user->update($request->only('name'));
+        }
+        if($request->has('email')) {
+            $validator = Validator::make($request->only('email'), [
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            ]);
+            if($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+            $user->update($request->only('email'));
+        }
+        if($request->has('role')) {
+            $validator = Validator::make($request->only('role'), [
+                'role' => ['required', Rule::in(['manager', 'user'])],
+            ]);
+
+            if($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+            $roleId = Role::whereIn('name', $request->only('role'))->pluck('id')->first();
+            $user->roles()->sync($roleId);
+        }
 
         if($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        $user->update($request->all());
+
 
         return redirect('/users');
     }
